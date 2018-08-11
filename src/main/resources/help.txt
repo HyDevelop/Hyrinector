@@ -1,0 +1,38 @@
+
+Hyrinector v${project.version}
+
+Usage: java -jar %{jarfile.name} [operation] [options]
+
+Operations:
+    help                Display this page.
+
+    download:
+        json            Download the skin assets index json.
+
+    extract:
+        default         Extract the default skin to cache.
+
+    init:               Initialize a new Hyrinector project with everything default.
+
+    convert             Convert a regular osu skin pack to a Hyrinecter skin project.
+
+    build               Build this project to a releasable osu readable skin file or folder.
+
+Options:
+    all:
+      -dp=<path>        Specify where the cache directory is.
+                        Default "./.cache/".
+
+    convert:
+      -fp=<path>        The path of the original skin.
+                        It could be an osk file or a folder.
+      -cp=<path>        The path that you want to convert it to.
+                        Default "./convert/".
+      -fm=<boolean>     Fill the missing assets or not.
+                        Default true.
+
+    build:
+      -bp=<path>        The path that you want to build it to.
+                        Default "./build/".
+      -f=<format>       Specify the format of the build result.
+                        It could be "FOLDER" or "OSK". Default "OSK".
