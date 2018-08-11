@@ -95,10 +95,10 @@ public class Builder
         try
         {
             OperationType operationType = OperationType.parse(FilenameUtils.getExtension(file.getName()));
-            if (operationType == OperationType.DO_NOTHING) operationType = OperationType.parse(file.getParentFile().getName());
+            if (operationType == OperationType.COPY) operationType = OperationType.parse(file.getParentFile().getName());
             switch (operationType)
             {
-                case DO_NOTHING:
+                case USE_DEFAULT:
                 {
                     // Do nothing, so that osu would use the default resource.
                     // 不复制文件, 使用默认资源
@@ -113,13 +113,14 @@ public class Builder
                             new File(toDir, FilenameUtils.removeExtension(file.getName())));
                     return "已改为透明: " + file.getName();
                 }
-                default:
+                case COPY:
                 {
                     // Directly copy the resource without processing.
                     // 其他所有资源, 直接复制
                     FileUtils.copyFile(file, new File(toDir, file.getName()));
                     return "已复制: " + file.getName();
                 }
+                default: return null;
             }
         }
         catch (IOException e)
@@ -138,7 +139,7 @@ public class Builder
 
     private enum OperationType
     {
-        DO_NOTHING,
+        COPY,
         USE_DEFAULT("default", "usedefault"),
         DISABLED("disabled", "disable"),
         SMALLER("1x", "smaller");
@@ -154,7 +155,7 @@ public class Builder
 
         public static OperationType parse(String name)
         {
-            return Constants.nameIndex.getOrDefault(name, DO_NOTHING);
+            return Constants.nameIndex.getOrDefault(name, COPY);
         }
 
         private static class Constants
