@@ -32,7 +32,9 @@ Options:
                         Default true.
 
     build:
-      -bp=<path>        The path that you want to build it to.
-                        Default "./build/".
+      -fp=<path>        The path of the project folder. This parameter is required.
+
+      -cp=<path>        The path that you want to build it to.
+                        Default "../build/".
       -f=<format>       Specify the format of the build result.
-                        It could be "FOLDER" or "OSK". Default "OSK".
+                        It could be "FOLDER", "OSK", or "BOTH". Default "BOTH".
