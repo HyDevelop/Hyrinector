@@ -32,3 +32,13 @@ This is a tool that would make skin projects easier to complete. For example it 
 Tutorial:
 --------
 
+### Converting a Skin Project:
+
+1. Create a folder named `Skin` in the project folder and move all of the skin elements there.
+2. Delete all the regular resolution image files if there's a @2x version of it because they can be automatically generated.
+3. You can sort the skin elements and put them in different folders within the `Skin` folder however you want.
+4. You should put `.psd`, `.pxr`, and etc. files outside of the `Skin` folder, since they're not relevent to the skin itself.
+5. Download the `.jar` file from [Releases](https://github.com/HyDevelop/Hyrinector/releases), and put it in your project folder.
+
+
+
