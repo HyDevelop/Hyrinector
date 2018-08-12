@@ -46,6 +46,7 @@ Tutorial:
 #### If you're using Windows OS:
 
 1. Create a script file, name it `build.bat`.
-2. Paste this in: `java -jar "INSERT JAR FILE NAME HERE" build -fp="./Skin" -cp="./Build"`.
-3. And yes, you have to replace `INSERT JAR FILE NAME HERE` with the actual name of the jar file you downloaded.
-4. Done, and just doubleclick it to build the project.
+2. Open it with a text editor.
+3. Paste this in: `java -jar "INSERT JAR FILE NAME HERE" build -fp="./Skin" -cp="./Build"`.
+4. And yes, you have to replace `INSERT JAR FILE NAME HERE` with the actual name of the jar file you downloaded.
+5. Done, and just doubleclick it to build the project.
