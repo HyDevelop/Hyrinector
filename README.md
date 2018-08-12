@@ -62,4 +62,4 @@ Tutorial:
 7. Type `chmod +x ./build.sh` to make it runnable.
 8. Done, and just run it to build the project.
 
-~~No but why do I ever have to explain to a Linux user how to run a bash script... ~~
+~~No but why do I ever have to explain to a Linux user how to run a bash script...~~
