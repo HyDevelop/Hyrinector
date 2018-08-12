@@ -50,3 +50,16 @@ Tutorial:
 3. Paste this in: `java -jar "INSERT JAR FILE NAME HERE" build -fp="./Skin" -cp="./Build"`.
 4. And yes, you have to replace `INSERT JAR FILE NAME HERE` with the actual name of the jar file you downloaded.
 5. Done, and just doubleclick it to build the project.
+
+#### If you're using Linux ~~or Mac OS~~:
+
+1. Create a script file, name it `build.sh`.
+2. Open it with a text editor.
+3. Paste this in: `java -jar "INSERT JAR FILE NAME HERE" build -fp="./Skin" -cp="./Build"`.
+4. And yes, you have to replace `INSERT JAR FILE NAME HERE` with the actual name of the jar file you downloaded.
+5. Open command prompt.
+6. Type `cd INSERT PROJECT DIRECTORY HERE`.
+7. Type `chmod +x ./build.sh` to make it runnable.
+8. Done, and just run it to build the project.
+
+~~No but why do I ever have to explain to a Linux user how to run a bash script... ~~
