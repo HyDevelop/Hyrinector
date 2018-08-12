@@ -39,6 +39,13 @@ Tutorial:
 3. You can sort the skin elements and put them in different folders within the `Skin` folder however you want.
 4. You should put `.psd`, `.pxr`, and etc. files outside of the `Skin` folder, since they're not relevent to the skin itself.
 5. Download the `.jar` file from [Releases](https://github.com/HyDevelop/Hyrinector/releases), and put it in your project folder.
+6. Done.
 
+### Adding a Script to Build The Project:
 
+#### If you're using Windows OS:
 
+1. Create a script file, name it `build.bat`.
+2. Paste this in: `java -jar "INSERT JAR FILE NAME HERE" build -fp="./Skin" -cp="./Build"`.
+3. And yes, you have to replace `INSERT JAR FILE NAME HERE` with the actual name of the jar file you downloaded.
+4. Done, and just doubleclick it to build the project.
