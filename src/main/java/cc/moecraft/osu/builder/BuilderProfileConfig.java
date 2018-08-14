@@ -44,4 +44,25 @@ public class BuilderProfileConfig extends Config
 
     @Override
     public void writeDefaultConfig() {}
+
+    /**
+     * 递归获取包含继承的所有edit
+     * @param profileName 配置名
+     * @return 所有edit
+     */
+    public ArrayList<BuilderProfileEdit> getAllEdits(String profileName)
+    {
+        ArrayList<BuilderProfileEdit> edits = new ArrayList<>(builderProfiles.get(profileName).getEdits());
+
+        for (BuilderProfileEdit edit : builderProfiles.get(profileName).getEdits())
+        {
+            if (edit.getOperation() == BuilderProfileEdit.Operation.INHERIT)
+            {
+                if (builderProfiles.containsKey(edit.getValue())) edits.addAll(getAllEdits(edit.getValue()));
+                else throw new RuntimeException("INHERIT tag '" + edit.getValue() + "' from '" + profileName + "' does not exist.");
+            }
+        }
+
+        return edits;
+    }
 }
