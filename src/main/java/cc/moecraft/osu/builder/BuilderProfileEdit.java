@@ -19,6 +19,14 @@ public class BuilderProfileEdit
 {
     private Operation operation;
     private String value;
+
+    public static BuilderProfileEdit parse(String edit)
+    {
+        String operationName = edit.split(" ")[0];
+        Operation operation = Operation.parse(operationName);
+        return new BuilderProfileEdit(operation, edit.replaceFirst(operationName + " ", ""));
+    }
+
     public enum Operation
     {
         IGNORE, INHERIT, DISABLE;
