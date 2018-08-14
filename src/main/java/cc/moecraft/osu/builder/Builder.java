@@ -142,7 +142,7 @@ public class Builder
             File oskFile = new File(archiveDir, fileName);
 
             Archiver archiver = ArchiverFactory.createArchiver(ArchiveFormat.ZIP);
-            archiver.create(zipFile.getName(), buildDir.getParentFile(), buildDir.listFiles());
+            zipFile = archiver.create(zipFile.getName(), buildDir.getParentFile(), buildDir.listFiles());
             FileUtils.moveFile(zipFile, oskFile);
             
             return "Pack success, OSK file: " + oskFile;
