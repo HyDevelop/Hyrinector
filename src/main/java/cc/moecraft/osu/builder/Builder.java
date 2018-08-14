@@ -111,7 +111,10 @@ public class Builder
             File[] files = buildDir.listFiles();
 
             for (File file : Objects.requireNonNull(files))
-                System.out.println(editFile(pattern, file, edit, emptyPixelFile));
+            {
+                String message = editFile(pattern, file, edit, emptyPixelFile);
+                if (message != null) System.out.println(message);
+            }
         }
 
         return "Edit Success.";
