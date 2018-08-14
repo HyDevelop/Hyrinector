@@ -19,4 +19,23 @@ public class BuilderProfileEdit
 {
     private Operation operation;
     private String value;
+    public enum Operation
+    {
+        IGNORE, INHERIT, DISABLE;
+
+        Operation()
+        {
+            Constants.nameIndex.put(name().toLowerCase(), this);
+        }
+
+        public static Operation parse(String name)
+        {
+            return Constants.nameIndex.get(name.toLowerCase());
+        }
+
+        static class Constants
+        {
+            private static Map<String, Operation> nameIndex = new HashMap<>();
+        }
+    }
 }
