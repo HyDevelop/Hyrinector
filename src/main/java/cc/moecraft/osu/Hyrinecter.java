@@ -114,7 +114,15 @@ public class Hyrinecter
         if (builderProfileFile.exists())
         {
             BuilderProfileConfig profileConfig = new BuilderProfileConfig("./");
-            Builder.build(projectPath, toPath, profileConfig);
+            try
+            {
+                Builder.build(projectPath, toPath, profileConfig);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return "Error: Build failed: " + e.getMessage();
+            }
         }
         else
         {
