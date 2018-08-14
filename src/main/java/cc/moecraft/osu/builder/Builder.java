@@ -155,7 +155,7 @@ public class Builder
 
     private static String editFile(Pattern pattern, File file, BuilderProfileEdit edit, File emptyPixelFile)
     {
-        if (pattern.matcher(file.getName()).matches())
+        if (pattern.matcher(file.getName().replace("@2x", "")).matches())
         {
             if (edit.getOperation() == BuilderProfileEdit.Operation.DISABLE)
             {
