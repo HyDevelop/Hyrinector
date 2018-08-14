@@ -1,6 +1,8 @@
 package cc.moecraft.osu;
 
 import cc.moecraft.osu.builder.Builder;
+import cc.moecraft.osu.builder.BuilderProfile;
+import cc.moecraft.osu.builder.BuilderProfileConfig;
 import cc.moecraft.osu.converter.Converter;
 import cc.moecraft.osu.generator.EntriesJsonWriter;
 import cc.moecraft.osu.generator.shared.EntryResolver;
@@ -108,11 +110,24 @@ public class Hyrinecter
         File projectPath = new File(options.get("fp"));
         File toPath = new File(options.getOrDefault("cp", new File(projectPath.getParentFile(), "build/").getAbsolutePath()));
 
-        Builder.build(projectPath, toPath);
+        File builderProfileFile = new File("builder-profile.yml");
+        if (builderProfileFile.exists())
+        {
+            BuilderProfileConfig profileConfig = new BuilderProfileConfig("./");
+            Builder.build(projectPath, toPath, profileConfig);
+        }
+        else
+        {
+            Builder.build(projectPath, toPath);
 
-        System.out.println("Done building, start checking.");
+            System.out.println("== Done building, start checking. ==");
 
-        Builder.check(toPath);
+            Builder.check(toPath);
+
+            System.out.println("== Done checking, start packing.  ==");
+
+            System.out.println(Builder.pack(toPath, toPath.getParentFile()));
+        }
 
         return "Build Success. Target path: " + toPath;
     }
