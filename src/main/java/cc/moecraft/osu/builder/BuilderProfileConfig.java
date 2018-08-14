@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public class BuilderProfileConfig extends Config
 {
+    @Getter
+    private Map<String, BuilderProfile> builderProfiles;
+
     public BuilderProfileConfig(String dir)
     {
         super(dir, "builder-profile", "yml", false, true, false);
@@ -26,6 +29,17 @@ public class BuilderProfileConfig extends Config
     @Override
     public void readConfig()
     {
+        this.builderProfiles = new HashMap<>();
+
+        for (String key : getKeys(""))
+        {
+            BuilderProfile profile = new BuilderProfile(key, Builder.Format.OSK, getString(key + ".FileName"), new ArrayList<>());
+
+            for (String edit : getStringList(key + ".Edits"))
+                profile.getEdits().add(BuilderProfileEdit.parse(edit));
+
+            builderProfiles.put(key, profile);
+        }
     }
 
     @Override
