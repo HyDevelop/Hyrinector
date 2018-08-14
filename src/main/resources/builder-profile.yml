@@ -1,0 +1,39 @@
+Regular:
+  Format: OSK
+  FileName: '%{name} - %{first-author}.osk'
+  Edits:
+  - IGNORE .*\.psd
+
+Minimal:
+  Format: OSK
+  FileName: '%{name} Minimal - %{first-author}.osk'
+  Edits:
+  - INHERIT Regular
+  - DISABLE hit300.*\.png
+  - DISABLE sliderfollowcircle.png
+  - DISABLE sliderpoint10.png
+  - DISABLE sliderpoint30.png
+  - DISABLE spinner-spin.png
+  - DISABLE spinner-osu.png
+  - DISABLE spinner-glow.png
+  - DISABLE spinner-middle.png
+
+SuperMinimal:
+  Format: OSK
+  FileName: '%{name} Super Minimal - %{first-author}.osk'
+  Edits:
+  - INHERIT Minimal
+  #- DISABLE hit100.*\.png
+  #- DISABLE hit50.*\.png
+  - DISABLE lighting.png
+  - DISABLE sliderendcircle.png
+  - DISABLE sliderendcircleoverlay.png
+  - DISABLE sliderb.*\.png
+  - DISABLE sliderb-nd.png
+  - DISABLE sliderb-spec.png
+  - DISABLE particle100.png
+  - DISABLE particle50.png
+  - DISABLE particle300.png
+  - DISABLE default-[0-9].png
+  - DISABLE scorebar-ki.*\.png
+  - DISABLE count[1-3]\.png
