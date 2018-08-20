@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import static cc.moecraft.osu.builder.BuilderProfileEdit.Operation.COPY;
+import static cc.moecraft.osu.builder.BuilderProfileEdit.Operation.MOVE;
+
 /**
  * 此类由 Hykilpikonna 在 2018/07/21 创建!
  * Created by Hykilpikonna on 2018/07/21!
@@ -43,6 +46,7 @@ public class Builder
         for (Map.Entry<String, BuilderProfile> entry : profileConfig.getBuilderProfiles().entrySet())
         {
             BuilderProfile profile = entry.getValue();
+            if (profile.getFormat() == Format.NONE) continue;
 
             System.out.println("== Start packaging for profile " + profile.getProfileName() + ". ==");
             File profileCacheDir = new File(ResourceUtils.getCacheDir(), "profile-cache-" + profile.getProfileName() + "-" + System.currentTimeMillis() + "/");
@@ -107,14 +111,29 @@ public class Builder
 
         for (BuilderProfileEdit edit : edits)
         {
-            Pattern pattern = Pattern.compile(edit.getValue());
-            File[] files = buildDir.listFiles();
-
-            for (File file : Objects.requireNonNull(files))
+            switch (edit.getOperation())
             {
-                String message = editFile(pattern, file, edit, emptyPixelFile);
-                if (message != null) System.out.println(message);
+                case COPY: case MOVE:
+                {
+                    editCopyOrMove(edit, buildDir, edit.getOperation());
+                    break;
+                }
+                default:
+                {
+                    Pattern pattern = Pattern.compile(edit.getValue());
+                    File[] files = buildDir.listFiles();
+
+                    for (File file : Objects.requireNonNull(files))
+                    {
+                        String message = editFile(pattern, file, edit, emptyPixelFile);
+                        if (message != null) System.out.println(message);
+                    }
+                    break;
+                }
             }
+
+
+
         }
 
         return "Edit Success.";
@@ -155,28 +174,60 @@ public class Builder
 
     private static String editFile(Pattern pattern, File file, BuilderProfileEdit edit, File emptyPixelFile)
     {
-        if (pattern.matcher(file.getName().replace("@2x", "")).matches())
+        if (pattern.matcher(file.getName().toLowerCase().replace("@2x", "")).matches())
         {
-            if (edit.getOperation() == BuilderProfileEdit.Operation.DISABLE)
+            switch (edit.getOperation())
             {
-                try
+                case IGNORE:
                 {
-                    FileUtils.copyFile(Objects.requireNonNull(emptyPixelFile), file);
-                    return "Profile edit: Disabled file " + file.getName();
+                    if (file.delete()) return "Profile edit: Ignored file " + file.getName();
+                    else return "Failed to ignore file " + file.getName();
                 }
-                catch (IOException e)
+                case DISABLE:
                 {
-                    return "Failed to disable " + file.getName() + " : " + e.getMessage();
+                    try
+                    {
+                        FileUtils.copyFile(Objects.requireNonNull(emptyPixelFile), file);
+                        return "Profile edit: Disabled file " + file.getName();
+                    }
+                    catch (IOException e)
+                    {
+                        return "Failed to disable " + file.getName() + " : " + e.getMessage();
+                    }
                 }
+                default: throw new RuntimeException("Error: Program Error 0xb0172 Please report to me@hydev.org");
             }
-            else if (edit.getOperation() == BuilderProfileEdit.Operation.IGNORE)
-            {
-                if (file.delete()) return "Profile edit: Ignored file " + file.getName();
-                else return "Failed to ignore file " + file.getName();
-            }
-            else throw new RuntimeException("Error: Program Error 0xb0172 Please report to me@hydev.org");
         }
         else return null;
+    }
+
+    private static void editCopyOrMove(BuilderProfileEdit edit, File profileDir, BuilderProfileEdit.Operation operation)
+    {
+        String[] toFiles = edit.getValue().toLowerCase().split(" to ");
+        String fromFile = toFiles[0];
+        for (String toFile : toFiles)
+        {
+            if (toFile.equals(fromFile)) continue;
+            try
+            {
+                if (operation == COPY)
+                {
+                    FileUtils.copyFile(new File(profileDir, fromFile), new File(profileDir, toFile));
+                }
+                if (operation == MOVE)
+                {
+                    FileUtils.moveFile(new File(profileDir, fromFile), new File(profileDir, toFile));
+                    break;
+                }
+
+                System.out.println("Profile edit: Copied " + fromFile + " to " + toFile);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                System.out.println("Failed to copy " + fromFile + " to " + toFile);
+            }
+        }
     }
 
     private static String checkFile(File file)
