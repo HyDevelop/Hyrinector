@@ -284,6 +284,6 @@ public class Builder
 
     enum Format
     {
-        OSK
+        OSK, NONE
     }
 }
