@@ -33,7 +33,9 @@ public class BuilderProfileConfig extends Config
 
         for (String key : getKeys(""))
         {
-            BuilderProfile profile = new BuilderProfile(key, Builder.Format.OSK, getString(key + ".FileName"), new ArrayList<>());
+            BuilderProfile profile = new BuilderProfile(key,
+                    Builder.Format.valueOf(getString(key + ".Format")),
+                    getString(key + ".FileName"), new ArrayList<>());
 
             for (String edit : getStringList(key + ".Edits"))
                 profile.getEdits().add(BuilderProfileEdit.parse(edit));
