@@ -29,7 +29,7 @@ public class BuilderProfileEdit
 
     public enum Operation
     {
-        IGNORE, INHERIT, DISABLE;
+        IGNORE, INHERIT, DISABLE, COPY, MOVE;
 
         Operation()
         {
